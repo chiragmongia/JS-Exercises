@@ -14,7 +14,7 @@ function addRow() {
   cell3.innerHTML = "<input type=\"button\" value=\"save\" onclick=\"save(" + row.rowIndex + ")\">"
 }
 
-function save(no) {
+function save(rowIndex) {
   var fname = document.getElementById("name");
   var email = document.getElementById("email");
 
@@ -23,24 +23,22 @@ function save(no) {
   else if (email.value == "")
     alert("Email can't be blank")
   else {
-    table.rows[no].cells[0].innerHTML = fname.value;
-    table.rows[no].cells[1].innerHTML = email.value;
-    table.rows[no].cells[2].innerHTML = "<a name=\"edit\" onclick=\"editRow(this)\">Edit</a> | <a name=\"del\" onclick=\"removeRow(this)\">Delete</a> "
+    table.rows[rowIndex].cells[0].innerHTML = fname.value;
+    table.rows[rowIndex].cells[1].innerHTML = email.value;
+    table.rows[rowIndex].cells[2].innerHTML = "<a name=\"edit\" onclick=\"editRow(this)\">Edit</a> / <a name=\"del\" onclick=\"removeRow(this)\">Delete</a> "
   }
 }
 
-function editRow(currentRow) {
-  var fname = document.getElementById("name");
-  var email = document.getElementById("email");
-
-  var row_no = currentRow.parentNode.parentNode.rowIndex;
-  var row = table.rows[row_no];
+function editRow(currentElement) {
+  var row_number = currentElement.parentNode.parentNode.rowIndex;
+  var row = table.rows[row_number];
+  console.log(row.childNodes)
 
   row.cells[0].innerHTML = "<input type=\"text\" id=\"name\">";
   row.cells[1].innerHTML = "<input type=\"email\" id=\"email\">";
   row.cells[2].innerHTML = "<input type=\"button\" value=\"save\" onclick=\"save(" + row.rowIndex + ")\">";
 }
 
-function removeRow(currentRow) {
-  table.deleteRow(currentRow.parentNode.parentNode.rowIndex);
+function removeRow(currentElement) {
+  table.deleteRow(currentElement.parentNode.parentNode.rowIndex);
 }
