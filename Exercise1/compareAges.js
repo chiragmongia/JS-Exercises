@@ -7,10 +7,10 @@ function User(fname, age) {
     else if (user.age > this.age)
       alert(user.fname + " is older than " + this.fname);
     else
-      alert("Mary and John are of equal ages.");
+      alert(user.fname + " and " + this.fname + " are of equal ages");
   }
 }
 
-var user1 = new User("Mary", 20);
-var user2 = new User("John", 50);
+var user1 = new User("Hank", 10);
+var user2 = new User("Matt", 30);
 user1.compare(user2);
