@@ -4,8 +4,11 @@ var selectedDays = [],
     days = document.getElementsByClassName("days"),
     none = document.getElementById("none");
 
-for (var i=0; i < days.length; i++) {
-     days[i].onclick = function() {
+function checkDays() {}
+
+checkDays.prototype.checkThree = function() {
+  for (var i=0; i < days.length; i++) {
+    days[i].onclick = function() {
       none.checked = false;
       if (this.checked) {
         selectedDays.push(this);
@@ -22,13 +25,20 @@ for (var i=0; i < days.length; i++) {
         alert(errorStatement);
       }
     }
- }
+  }
+}
 
-var checkNone = function() {
-  for(var i=0; i < days.length; i++) {
-    if (none.checked == true) {
-      selectedDays = [];
-      days[i].checked = false;
+checkDays.prototype.checkNone = function() {
+  none.onclick = function() {
+    for(var i=0; i < days.length; i++) {
+      if (none.checked) {
+        selectedDays = [];
+        days[i].checked = false;
+      }
     }
   }
 }
+
+var checkedDays = new checkDays();
+checkedDays.checkThree();
+checkedDays.checkNone();
