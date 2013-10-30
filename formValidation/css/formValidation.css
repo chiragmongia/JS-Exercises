@@ -1,0 +1,71 @@
+#regForm {
+  width: 400px;
+  margin: 0px auto;
+  background: #EBF5D6;
+}
+
+h4 {
+  background: #6C8834;
+  text-align: center;
+  color: white;
+  padding: 1px 0px;
+}
+
+label {
+  float: left;
+  width: 126px;
+  margin-left: 12px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 7px;
+  letter-spacing: 1px;
+}
+
+#timezone {
+  width: 140px;
+}
+
+#aboutMe {
+  width: 370px;
+  margin: 5px 12px 0px;
+  height: 150px;
+  resize: none;
+}
+
+.dataFields {
+  width: 160px;
+  border: solid 1px;
+  margin-top: 5px;
+  background: white;
+}
+
+label[for="notify"] {
+  float: none;
+  margin-left: 0px;
+}
+
+#notify {
+  margin: 10px 0px 0px 15px;
+}
+
+#disclaimer {
+  font-size: 12px;
+  margin: 0px 15px;
+}
+
+#passwordMailText {
+  font-size: 13px;
+  text-align: center;
+}
+
+#go {
+  background: #3E5214;
+  color: white;
+  border-radius: 7px;
+  margin: 0px 182px 10px;
+  font-weight: bold;
+}
+
+input:focus, textarea:focus {
+  background: #ffff66;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/formValidation.css">
+  </head>
+  <body>
+    <div id="container">
+      <form id="regForm" action="submit.html">
+        <h4>Registration Form</h4>
+        <label for="login">Login Id</label>
+        <input type="text" id="login" name="login" class="dataFields" autofocus><br/>
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" class="dataFields"><br/>
+
+        <label for="fname">Name</label>
+        <input type="text" id="fname" name="fname" class="dataFields"><br/>
+
+        <label for="timezone">Timezone</label>
+        <select id="timezone" class="dataFields">
+          <option>GMT</option>
+          <option>EDT</option>
+          <option>IST</option>
+        </select><br/>
+
+        <label for="homepage">Home Page</label>
+        <input type="text" id="homepage" name="homepage" class="dataFields"><br/>
+
+        <label for="aboutMe">About Me</label><br/>
+        <textarea id="aboutMe" name="aboutMe"></textarea><br/>
+
+        <input type="checkbox" id="notify" name="notify">
+        <label for="notify"><strong>Receive notifications of comments.</strong></label>
+        <p id="disclaimer">You will be sent an email when someone posts comments to your Blog or Album.</p>
+
+        <p id="passwordMailText">Your password will be mailed to you</p>
+        <input type="submit" id="go" name="go" value="GO">
+      </form>
+    </div>
+
+    <script src="js/formValidation.js" type="text/javascript"></script>
+  </body>
+</html>
