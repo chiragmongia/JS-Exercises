@@ -32,7 +32,12 @@ checkDays.prototype = {
         if (obj.selectedDays.length > obj.maxDays) {
           obj.selectedDays.pop();
           this.checked = false;
-          obj.errorStatement = "Only 3 days can be selected. You have already selected " + obj.selectedDays[0].value + " , " + obj.selectedDays[1].value + " and " + obj.selectedDays[2].value;
+          obj.errorStatement = "Only " + obj.maxDays + " days can be selected. You have alerady selected ";
+          for(var j = 0; j < (obj.selectedDays.length-1); j++) {
+            obj.errorStatement = obj.errorStatement + obj.selectedDays[j].value + ", "; 
+          }
+          obj.errorStatement = obj.errorStatement.substring(0, obj.errorStatement.length - 2); 
+          obj.errorStatement = obj.errorStatement + " and " + obj.selectedDays[j].value;
           alert(obj.errorStatement);
         }
       }
@@ -42,12 +47,12 @@ checkDays.prototype = {
   checkNone: function() {
     var obj = this;
     obj.none.onclick = function() {
-      for(var i = 0; i < obj.days.length; i++) {
-        if (obj.none.checked) {
-          obj.selectedDays = [];
-          obj.days[i].checked = false;
+      for(var i = 0; i < obj.selectedDays.length; i++) {
+        if (this.checked) {
+          obj.selectedDays[i].checked = false;
         }
       }
+      obj.selectedDays = [];
     }
   }
 }
