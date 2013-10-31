@@ -1,28 +1,34 @@
 function colors() {
-  this.checkBoxes = document.getElementsByName("check");
-  this.check = function(checkVal) {
+  this.init();
+}
+
+colors.prototype = {
+  init: function() {
+    this.checkBoxes = document.getElementsByName("check");
+    this.BindEventForCheckAll();
+    this.BindEventForCheckNone();
+  },
+
+  changeStateForCheckboxes: function(state) {
     for(var i = 0; i < this.checkBoxes.length; i++)
-      this.checkBoxes[i].checked = checkVal;
-  };
+      this.checkBoxes[i].checked = state;
+  },
 
-  this.checkAll = function() {
+  BindEventForCheckAll: function() {
     var obj = this;
-    this.checkAllbtn = document.getElementById("all");
-    this.checkAllbtn.onclick = function() {
-      obj.check(true);
+    var checkAllbtn = document.getElementById("all");
+    checkAllbtn.onclick = function() {
+      obj.changeStateForCheckboxes(true);
     }
-  };
+  },
 
-  this.checkNone = function() {
+  BindEventForCheckNone: function() {
     var obj = this;
-    this.checkNoneBtn = document.getElementById("none");
-    this.checkNoneBtn.onclick = function() {
-      obj.check(false);
+    var checkNoneBtn = document.getElementById("none");
+    checkNoneBtn.onclick = function() {
+      obj.changeStateForCheckboxes(false);
     }
-  };
+  }
 }
 
 var color = new colors;
-color.check();
-color.checkAll();
-color.checkNone();
