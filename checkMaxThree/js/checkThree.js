@@ -33,11 +33,11 @@ checkDays.prototype = {
           obj.selectedDays.pop();
           this.checked = false;
           obj.errorStatement = "Only " + obj.maxDays + " days can be selected. You have alerady selected ";
-          for(var j = 0; j < (obj.selectedDays.length-1); j++) {
+          for(var j = 0; j < (obj.selectedDays.length-1); j++) {  //iterating till 2nd last element 
             obj.errorStatement = obj.errorStatement + obj.selectedDays[j].value + ", "; 
           }
-          obj.errorStatement = obj.errorStatement.substring(0, obj.errorStatement.length - 2); 
-          obj.errorStatement = obj.errorStatement + " and " + obj.selectedDays[j].value;
+          obj.errorStatement = obj.errorStatement.substring(0, obj.errorStatement.length - 2);  //removing comma and space from the error
+          obj.errorStatement = obj.errorStatement + " and " + obj.selectedDays[j].value; //Adding "and" before the last element
           alert(obj.errorStatement);
         }
       }
