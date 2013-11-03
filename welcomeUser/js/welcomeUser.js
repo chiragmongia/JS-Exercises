@@ -12,8 +12,8 @@ welcomeUser.prototype = {
   valiateName: function() {
     var obj = this;
     if (obj.firstName != null && obj.lastName != null) {
-      obj.firstName = obj.firstName.replace(/(^\s+|\s+$)/g,'');
-      obj.lastName = obj.lastName.replace(/(^\s+|\s+$)/g,'');
+      obj.firstName = obj.firstName.trim();
+      obj.lastName = obj.lastName.trim();
     }
 
     if (obj.firstName && obj.lastName) {
