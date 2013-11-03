@@ -33,4 +33,4 @@ welcomeUser.prototype = {
   }
 }
 
-var obj = new welcomeUser();
+var welcomeUser = new welcomeUser();
