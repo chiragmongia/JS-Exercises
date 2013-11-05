@@ -14,7 +14,10 @@ form.prototype = {
   submitFormIfNumber: function() {
     var obj = this;
     obj.form.onsubmit = function() {
-      obj.validateNumber();
+      if (obj.validateNumber()) {
+        alert("Number entered!")
+        return true;
+      }
       return false;
     }
   },
@@ -26,16 +29,19 @@ form.prototype = {
       obj.result.value = "";
       alert("Number cannot be blank");
       obj.number.focus();
+      return false;
     }
 
     else if (!obj.numberPattern.test(obj.number.value)) {
       obj.result.value = "false"
       alert("The value entered is not a number");
       obj.number.focus();
+      return false;
     }
 
     else
-      obj.result.value = "true"
+      obj.result.value = "true";
+      return true;
   }
 }
 
