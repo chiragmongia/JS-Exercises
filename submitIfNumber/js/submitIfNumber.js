@@ -7,7 +7,7 @@ form.prototype = {
     this.form = document.getElementById("form");
     this.result = document.getElementById("result");
     this.number = document.getElementById("number");
-    this.numberPattern = /^\d+$/;
+    this.numberPattern = /^-?\d*\.?\d*$/;
     this.submitFormIfNumber();
   },
 
