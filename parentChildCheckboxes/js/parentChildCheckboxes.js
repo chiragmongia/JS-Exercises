@@ -1,8 +1,8 @@
-var menuItems = function() {
+var MenuItems = function() {
   this.init();
 };
 
-menuItems.prototype = {
+MenuItems.prototype = {
   init: function() {
     this.parentCheckBox = document.getElementsByName("check");
     this.showOnCheck();
@@ -31,4 +31,4 @@ menuItems.prototype = {
   }
 }
 
-var object = new menuItems();
+var object = new MenuItems();
