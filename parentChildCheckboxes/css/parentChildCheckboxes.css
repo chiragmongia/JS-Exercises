@@ -1,13 +1,12 @@
 ul {
   list-style-type: none;
+}
+
+.childCheckBox {
   display: none;
 }
 
-li {
-  display: inline;
-}
-
-#container {
+.container {
   height: 100px;
-  overflow: auto;
+  overflow: auto; 
 }

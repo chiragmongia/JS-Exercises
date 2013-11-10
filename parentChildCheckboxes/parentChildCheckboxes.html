@@ -4,67 +4,91 @@
     <link rel="stylesheet" type="text/css" href="css/parentChildCheckboxes.css">
   </head>
   <body>
-    <div id="container">
-      <div class="colorContainer">
+    <ul class="container">
+      <li class="colorContainer">
         <input type="checkbox" id="color" name="check">
         <label for="color">Color</label>
-        <ul>
-          <li><input type="checkbox" id="red" name="red"></li>
-          <label for="red">Red</label><br/>
+        <ul class="childCheckBox" id="colorChild">
+          <li>
+            <input type="checkbox" id="red" name="red">
+            <label for="red">Red</label>
+          </li>
 
-          <li><input type="checkbox" id="blue" name="blue"></li>
-          <label for="blue">Blue</label><br/>
+          <li>
+            <input type="checkbox" id="blue" name="blue">
+            <label for="blue">Blue</label>
+          </li>
 
-          <li><input type="checkbox" id="green" name="green"></li>
-          <label for="green">Green</label><br/>
+          <li>
+            <input type="checkbox" id="green" name="green">
+            <label for="green">Green</label>
+          </li>
 
-          <li><input type="checkbox" id="yellow" name="yellow"></li>
-          <label for="yellow">Yellow</label><br/>
+          <li>
+            <input type="checkbox" id="yellow" name="yellow">
+            <label for="yellow">Yellow</label>
+          </li>
         </ul>
-      </div> 
+      </li>
 
-      <div class="moviesContainer">
+      <li class="moviesContainer">
         <input type="checkbox" id="movies" name="check">
-        <label for="movies">Movies</label> 
-        <ul>
-          <li><input type="checkbox" id="dar" name="dar"></li>
-          <label for="dar">Dar</label><br/>
+        <label for="movies">Movies</label>
+        <ul class="childCheckBox" id="moviesChild">
+          <li>
+            <input type="checkbox" id="dar" name="dar">
+            <label for="dar">Dar</label>
+          </li>
 
-          <li><input type="checkbox" id="sir" name="sir"></li>
-          <label for="sir">Sir</label><br/>
+          <li>
+            <input type="checkbox" id="sir" name="sir">
+            <label for="sir">Sir</label>
+          </li>
         </ul>
-      </div> 
+      </li> 
       
-      <div class="drinksContainer">
+      <li class="drinksContainer">
         <input type="checkbox" id="drinks" name="check">
         <label for="drinks">Drinks</label>  
-        <ul>
-          <li><input type="checkbox" id="coke" name="coke"></li>
-          <label for="coke">Coke</label><br/>
+        <ul class="childCheckBox" id="drinksChild">
+          <li>
+            <input type="checkbox" id="coke" name="coke">
+            <label for="coke">Coke</label>
+          </li>
 
-          <li><input type="checkbox" id="pepsi" name="pepsi"></li>
-          <label for="pepsi">Pepsi</label><br/>
+          <li>
+            <input type="checkbox" id="pepsi" name="pepsi">
+            <label for="pepsi">Pepsi</label>
+          </li>
 
-          <li><input type="checkbox" id="dew" name="dew"></li>
-          <label for="dew">Dew</label><br/>
+          <li>
+            <input type="checkbox" id="dew" name="dew">
+            <label for="dew">Dew</label>
+          </li>
         </ul>
-      </div> 
+      </li> 
 
-      <div class="bikesContainer">
+      <li class="bikesContainer">
         <input type="checkbox" id="bikes" name="check">
         <label for="bikes">Bikes</label>
-        <ul>
-          <li><input type="checkbox" id="vrod" name="vrod"></li>
-          <label for="vrod">V-Rod</label><br/>
+        <ul class="childCheckBox" id="bikesChild">
+          <li>
+            <input type="checkbox" id="vrod" name="vrod">
+            <label for="vrod">V-Rod</label>
+          </li>
 
-          <li><input type="checkbox" id="pulsar" name="pulsar"></li>
-          <label for="pulsar">Pulsar</label><br/>
+          <li>
+            <input type="checkbox" id="pulsar" name="pulsar">
+            <label for="pulsar">Pulsar</label>
+          </li>
 
-          <li><input type="checkbox" id="cbz" name="cbz"></li>
-          <label for="cbz">Cbz</label><br/>
+          <li>
+            <input type="checkbox" id="cbz" name="cbz">
+            <label for="cbz">Cbz</label>
+          </li>
         </ul>
-      </div>
-    </div>
+      </li>
+    </ul>
     <script src="js/parentChildCheckboxes.js" type="text/javascript"></script>
   </body>
 </html>
