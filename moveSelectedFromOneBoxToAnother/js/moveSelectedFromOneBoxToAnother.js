@@ -1,31 +1,35 @@
-var countrySelectBox = function() {
+var CountrySelectBox = function() {
   this.init();
 }
 
-countrySelectBox.prototype = {
+CountrySelectBox.prototype = {
   init: function() {
     this.leftSelectBox = document.getElementById("leftBox");
     this.rightSelectBox = document.getElementById("rightBox");
     this.addBtn = document.getElementById("add");
     this.removeBtn = document.getElementById("remove");
-    this.selectedCountry = [];
-    this.moveFromOneBoxToAnother(this.addBtn, this.leftSelectBox, this.rightSelectBox);
-    this.moveFromOneBoxToAnother(this.removeBtn, this.rightSelectBox, this.leftSelectBox);
+    this.bindEventwithButtons();
   },
 
-  moveFromOneBoxToAnother: function(buttonClicked, sourceSelectBox, destinationSelectBox) {
+  bindEventwithButtons: function() {
     var obj = this;
-    buttonClicked.onclick = function() {
-      obj.selectedCountry = [];
-      for (var i = 0; i < sourceSelectBox.options.length; i++) {
-        if (sourceSelectBox.options[i].selected)
-          obj.selectedCountry.push(sourceSelectBox.options[i]);
-      }
-
-      for (var j=0; j < obj.selectedCountry.length; j++)
-        destinationSelectBox.appendChild(obj.selectedCountry[j]);
+    obj.addBtn.onclick = function() {
+      obj.moveFromOneBoxToAnother(obj.leftSelectBox, obj.rightSelectBox);
     }
+
+    obj.removeBtn.onclick = function() {
+      obj.moveFromOneBoxToAnother(obj.rightSelectBox, obj.leftSelectBox);
+    }
+  },
+
+  moveFromOneBoxToAnother: function(sourceSelectBox, destinationSelectBox) {
+    var selectedCountry = [];
+    for (var i = 0; i < sourceSelectBox.selectedOptions.length; i++)
+      selectedCountry.push(sourceSelectBox.selectedOptions[i]);
+
+    for (var i = 0; i < selectedCountry.length; i++)
+      destinationSelectBox.appendChild(selectedCountry[i]);
   }
 }
 
-var countrySelectBox = new countrySelectBox();
+var countrySelectBox = new CountrySelectBox();
