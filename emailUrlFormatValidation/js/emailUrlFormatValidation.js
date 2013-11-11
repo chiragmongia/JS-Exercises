@@ -1,4 +1,4 @@
-emailPattern = /^[a-zA-Z]+\.?[a-zA-Z]+@[a-zA-Z]+?\.[a-zA-Z]{2,4}$/i;  //Very basic regex for email
+emailPattern = /^[a-zA-Z0-9][a-zA-Z0-9._]+[a-zA-Z0-9]+@[a-zA-Z]+?\.[a-zA-Z]{2,4}$/i;  //Very basic regex for email
 urlPattern = /((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i ;
 
 var Registrationform = function() {
