@@ -1,13 +1,13 @@
-var form = function() {
+var Form = function() {
   this.init();
 }
 
-form.prototype = {
+Form.prototype = {
   init: function() {
     this.form = document.getElementById("form");
     this.result = document.getElementById("result");
     this.number = document.getElementById("number");
-    this.numberPattern = /^-?\d*\.?\d*$/;
+    this.numberPattern = /^[-+]?\d*\.?\d+$/;
     this.submitFormIfNumber();
   },
 
@@ -25,7 +25,7 @@ form.prototype = {
   validateNumber: function() {
     var obj = this;
     obj.number.value = obj.number.value.trim();
-    if (obj.number.value == "") {
+    if (obj.number.value == "" || obj.number.value == null) {
       obj.result.value = "";
       alert("Number cannot be blank");
       obj.number.focus();
@@ -39,10 +39,11 @@ form.prototype = {
       return false;
     }
 
-    else
+    else {
       obj.result.value = "true";
       return true;
+    }
   }
 }
 
-var form = new form();
+var form = new Form();
