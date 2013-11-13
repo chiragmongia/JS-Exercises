@@ -9,8 +9,7 @@ PopUpInputUrl.prototype = {
   },
 
   readInputAndTrim: function() {
-    this.url = prompt("Enter the url");
-    this.url = (this.url || "").trim();
+    this.url = (prompt("Enter the url") || "").trim();
   },
 
   validateUrlPresence: function() {
