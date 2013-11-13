@@ -1,5 +1,7 @@
-emailPattern = /^[a-zA-Z0-9][a-zA-Z0-9._]+[a-zA-Z0-9]+@[a-zA-Z]+?\.[a-zA-Z]{2,4}$/i;  //Very basic regex for email
-urlPattern = /((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i ;
+var Regex = {
+  emailPattern: /^[a-zA-Z0-9][a-zA-Z0-9._]+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/i,
+  urlPattern: /((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i
+};
 
 var Registrationform = function() {
   this.init();
@@ -16,13 +18,12 @@ Registrationform.prototype = {
   validateForm: function() {
     var obj = this;
     obj.form.onsubmit = function() {
-      if (obj.validateEmailAndUrl(obj.email, emailPattern) && obj.validateEmailAndUrl(obj.url, urlPattern)) {
+      if (obj.validateEmailAndUrl(obj.email, Regex.emailPattern) && obj.validateEmailAndUrl(obj.url, Regex.urlPattern)) {
         return true;
       }
       return false;
     }
   },
-
 
   validateEmailAndUrl: function(inputField, pattern) {
     var obj = this;
