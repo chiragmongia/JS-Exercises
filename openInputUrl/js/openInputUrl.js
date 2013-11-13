@@ -1,33 +1,31 @@
-var popUpInputUrl = function() {
+var PopUpInputUrl = function() {
   this.init();
 }
 
-popUpInputUrl.prototype = {
+PopUpInputUrl.prototype = {
   init: function() {
-    this.inputUrl = prompt("Enter the url");
+    this.readInputAndTrim();
     this.validateUrlPresence();
   },
 
+  readInputAndTrim: function() {
+    this.url = prompt("Enter the url");
+    this.url = (this.url || "").trim();
+  },
+
   validateUrlPresence: function() {
-    var obj = this;
-    obj.inputUrl = obj.inputUrl.trim();
-    if (obj.inputUrl == "") {
-      alert("Please enter the url.");
+    while (this.url == "") {
+      alert("Please enter the url");
+      this.readInputAndTrim();
     }
 
-    else {
-      obj.openUrlInNewWindow();
-    }
+    this.openUrlInNewWindow();
   },
 
   openUrlInNewWindow: function() {
-    var obj = this;
-    if (obj.inputUrl) {
-      var options = "width = 400px, height = 450px, scrollbars = no, status = no, menubar = no, toolbar = no";
-      var newWindow = window.open(obj.inputUrl, "", options);
-      newWindow.document.body.style.overflow = "hidden";
-    }
+    var options = "width = 400px, height = 450px, scrollbars = no, status = no, menubar = no, toolbar = no";
+    window.open(this.url, "", options);
   }
 }
 
-var popUpInputUrl = new popUpInputUrl();
+var popUpInputUrl = new PopUpInputUrl();
