@@ -1,3 +1,7 @@
+var Regex = {
+  numberPattern: /^[-+]?\d*\.?\d+$/
+}
+
 var Form = function() {
   this.init();
 }
@@ -7,7 +11,6 @@ Form.prototype = {
     this.form = document.getElementById("form");
     this.result = document.getElementById("result");
     this.number = document.getElementById("number");
-    this.numberPattern = /^[-+]?\d*\.?\d+$/;
     this.submitFormIfNumber();
   },
 
@@ -15,7 +18,7 @@ Form.prototype = {
     var obj = this;
     obj.form.onsubmit = function() {
       if (obj.validateNumber()) {
-        alert("Number entered!")
+        alert("Number entered!");
         return true;
       }
       return false;
@@ -25,14 +28,14 @@ Form.prototype = {
   validateNumber: function() {
     var obj = this;
     obj.number.value = obj.number.value.trim();
-    if (obj.number.value == "" || obj.number.value == null) {
+    if (obj.number.value == "") {
       obj.result.value = "";
       alert("Number cannot be blank");
       obj.number.focus();
       return false;
     }
 
-    else if (!obj.numberPattern.test(obj.number.value)) {
+    else if (!Regex.numberPattern.test(obj.number.value)) {
       obj.result.value = "false"
       alert("The value entered is not a number");
       obj.number.focus();
