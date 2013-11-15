@@ -23,13 +23,8 @@ CountrySelectBox.prototype = {
   },
 
   moveFromOneBoxToAnother: function(sourceSelectBox, destinationSelectBox) {
-    var selectedCountry = [];
-    for (var i = 0; i < sourceSelectBox.selectedOptions.length; i++)
-      selectedCountry.push(sourceSelectBox.selectedOptions[i]);
-
-    for (var i = 0; i < selectedCountry.length; i++)
-      destinationSelectBox.appendChild(selectedCountry[i]);
-  }
+    while( sourceSelectBox.selectedOptions.length != 0 )
+      destinationSelectBox.appendChild(sourceSelectBox.selectedOptions[0]);
 }
 
 var countrySelectBox = new CountrySelectBox();
