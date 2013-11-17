@@ -11,23 +11,25 @@ MenuItems.prototype = {
   showOnCheck: function() {
     var obj = this;
     for (var i = 0; i < obj.parentCheckBox.length; i++) {
-      obj.parentCheckBox[i].onclick = function() {
+      this.parentCheckBox[i].onclick = function() {
         if (this.checked) {
-          this.len = this.parentNode.childElementCount;
-          this.parentNode.children[this.len-1].style.display = "block";
+          this.parentNode.getElementsByTagName("ul")[0].style.display = "block";
           this.scrollIntoView(true);
-          this.childCheckBoxes = this.parentNode.children[this.len-1].getElementsByTagName("input");
-          for (var j = 0; j < this.childCheckBoxes.length; j++)
-            this.childCheckBoxes[j].checked = true;
+          this.childCheckBoxes = this.parentNode.getElementsByClassName("childCheck");
+          obj.changeStateForCheckboxes(this.childCheckBoxes, true);
         }
 
         else {
-          this.parentNode.children[this.len-1].style.display = "none";
-          for (var j = 0; j < this.childCheckBoxes.length; j++)
-            this.childCheckBoxes[j].checked = false;
+          this.parentNode.getElementsByTagName("ul")[0].style.display = "none";
+          obj.changeStateForCheckboxes(this.childCheckBoxes, false);
         }
       }
     }
+  },
+
+  changeStateForCheckboxes: function(checkBoxes, state) {
+    for (var i = 0; i < checkBoxes.length; i++)
+      checkBoxes[i].checked = state;
   }
 }
 
