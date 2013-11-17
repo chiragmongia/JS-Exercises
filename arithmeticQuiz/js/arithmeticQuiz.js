@@ -1,21 +1,3 @@
-var Operator = {
-  addition: function(first, second) {
-    return first+second;
-  },
-
-  subtraction: function(first, second) {
-    return first-second;
-  },
-
-  multiplication: function(first, second) {
-    return first*second;
-  },
-
-  division: function(first, second) { 
-    return first/second;
-  }
-}
-
 var Quiz = function() {
   this.init();
 }
@@ -32,7 +14,8 @@ Quiz.prototype = {
     this.nextBtn             = document.getElementById("nextBtn");
     this.submitBtn           = document.getElementById("submitBtn");
     this.generateQuestions();
-    this.compareResult();
+    this.BindEventForSubmitButton();
+    this.evaluateResultOnNextButtonClick();
   },
 
   generateQuestions: function() {
@@ -41,31 +24,39 @@ Quiz.prototype = {
         operatorSymbol,
         i;
 
-    for ( i = 0; i < obj.maxQuestions; i++) {
+    for ( i = 0; i < this.maxQuestions; i++) {
       var number1 = Math.floor((Math.random() * 20) + 1);
       var number2 = Math.floor((Math.random() * 20) + 1);
       var numForOperator = Math.floor((Math.random() * 4) + 1);
 
       switch(numForOperator) {
-        case 1: operator = Operator.addition;
+        case 1: operator = function(first, second) {
+                             return first + second;
+                           };
                 operatorSymbol = "+";
                 break;
 
-        case 2: operator = Operator.subtraction;
+        case 2: operator = function(first, second) {
+                             return first - second;
+                           };
                 operatorSymbol = "-";
                 break;
 
-        case 3: operator = Operator.multiplication;
+        case 3: operator = function(first, second) {
+                             return first * second;
+                           };
                 operatorSymbol = "*";
                 break;
 
-        case 4: operator = Operator.division;
+        case 4: operator = function(first, second) {
+                             return first / second;
+                           };;
                 operatorSymbol = "/";
                 break;
       }
 
-      obj.questionData.push(
-        { "id": i, 
+      this.questionData.push(
+        { "id": (i+1), 
           "number1": number1, 
           "number2": number2,
           "operator": operator,
@@ -75,26 +66,29 @@ Quiz.prototype = {
           "answerStatus": "" }
       );
 
-      obj.questionData[i].correctAnswer = obj.questionData[i].operator(obj.questionData[i].number1, obj.questionData[i].number2);
-      obj.questionData[i].correctAnswer = Math.round(obj.questionData[i].correctAnswer * 100)/100;
-      obj.questionString[i] = ("Question-" + (i+1) + ": <br/>" + obj.questionData[i].number1 + " " + obj.questionData[i].operatorSymbol + " " + obj.questionData[i].number2 + " = ");
+      this.questionData[i].correctAnswer = this.questionData[i].operator(this.questionData[i].number1, this.questionData[i].number2);
+      this.questionData[i].correctAnswer = Math.round(this.questionData[i].correctAnswer * 100)/100;
+      this.questionString[i] = ("Question-" + (i+1) + ": <br/>" + this.questionData[i].number1 + " " + this.questionData[i].operatorSymbol + " " + this.questionData[i].number2 + " = ");
     }
   },
 
-  compareResult: function() {
+  BindEventForSubmitButton: function() {
+    var obj = this;
+    this.submitBtn.addEventListener("click", function() {
+      obj.displayResult();
+    }, false);
+  },
+
+  evaluateResultOnNextButtonClick: function() {
     var obj = this,
         score = document.getElementById("score");
-        score.innerHTML = ("Score: " + obj.correctAnswerCount);
+        score.innerHTML = ("Score: " + this.correctAnswerCount);
         i = 0;
 
-    obj.questionDiv.innerHTML = obj.questionString[i];
+    this.questionDiv.innerHTML = this.questionString[i];
 
-    obj.submitBtn.onclick = function() {
-      obj.displayResult();
-    }
-
-    obj.nextBtn.onclick = function() {
-      if (obj.answer.value.trim() == "") {
+    obj.nextBtn.addEventListener("click", function() {
+      if (!obj.answer.value.trim()) {
         obj.questionData[i].markedAnswer = "Unattempted!"
       }
 
@@ -102,12 +96,12 @@ Quiz.prototype = {
         if ( Math.round(obj.answer.value * 100) / 100 ==  obj.questionData[i].correctAnswer) {
           ++obj.correctAnswerCount;
           obj.questionData[i].answerStatus = 1;
-          obj.questionData[i].markedAnswer = parseInt(obj.answer.value);
+          obj.questionData[i].markedAnswer = Math.round(obj.answer.value * 100) / 100;
           score.innerHTML = ("Score: " + obj.correctAnswerCount);
         }
         else {
           obj.questionData[i].answerStatus = 0;
-          obj.questionData[i].markedAnswer = parseInt(obj.answer.value);;
+          obj.questionData[i].markedAnswer = Math.round(obj.answer.value * 100) / 100;
         }
       }
 
@@ -117,8 +111,9 @@ Quiz.prototype = {
 
       obj.questionDiv.innerHTML = obj.questionString[i+1];
       obj.answer.value = "";
+      obj.answer.focus();
       ++i;
-    }
+    }, false);
   },
 
   displayResult: function() {
@@ -130,22 +125,22 @@ Quiz.prototype = {
         heading      = document.createElement("h1"),
         headingText  = document.createTextNode("RESULT");
     
-    heading.style.cssText = "text-align:center;font-size:60px;"
+    heading.setAttribute( "class", "resultHeading");
     heading.appendChild(headingText);
     containerDiv.appendChild(heading);
 
-    for ( i = 0; i < obj.questionString.length; i++) {
-      if (obj.questionData[i].answerStatus == 1) {
-        resultString.push(obj.questionString[i] + obj.questionData[i].correctAnswer + " Correct!");
+    for ( i = 0; i < this.questionString.length; i++) {
+      if (this.questionData[i].answerStatus == 1) {
+        resultString.push(this.questionString[i] + this.questionData[i].correctAnswer + " Correct!");
       }
       else {
-        resultString.push(obj.questionString[i] + obj.questionData[i].markedAnswer + "<br/> Correct answer is " + obj.questionData[i].correctAnswer);
+        resultString.push(this.questionString[i] + this.questionData[i].markedAnswer + "<br/> Correct answer is " + this.questionData[i].correctAnswer);
       }
     }
 
     for ( i = 0; i < resultString.length; i++) {
       var paraElement = document.createElement("p");
-      paraElement.style.cssText = "margin:30px 0px;text-align:center;font-size:24px;"
+      paraElement.setAttribute( "class", "resultParagraph");
       paraElement.innerHTML = resultString[i];
       div.appendChild(paraElement);
     }
@@ -155,4 +150,13 @@ Quiz.prototype = {
   }
 }
 
-var arithmeticQuiz = new Quiz();
+window.onload = function() {
+  var startBtn      = document.getElementById("startQuiz");
+  var quizContainer = document.getElementById("quizContainer");
+
+  startBtn.addEventListener("click", function() {
+    var arithmeticQuiz = new Quiz();
+    this.style.display = "none";
+    quizContainer.style.display = "block";
+  }, false);
+}
