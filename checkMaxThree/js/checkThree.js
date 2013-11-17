@@ -19,8 +19,8 @@ checkDays.prototype = {
   checkThree: function() {
     var obj = this;
     for (var i = 0; i < obj.days.length; i++) {
-      obj.days[i].onclick = function() {
-        none.checked = false;
+      this.days[i].onclick = function() {
+        obj.none.checked = false;
         if (this.checked) {
           obj.selectedDays.push(this);
         }
