@@ -4,18 +4,21 @@
   </head>
   <body>
     <div id="container">
-      <h1>Arithmetic Quiz</h1>
-      <p id="note">(In case of Division, please round off to 2 decimal places)</p>
-      <div id="question">          
+      <p><input type="button" id="startQuiz" value="Start Quiz"></p>
+      <div id="quizContainer">
+        <h1>Arithmetic Quiz</h1>
+        <p id="note">(In case of Division, please round off to 2 decimal places)</p>
+        <div id="question">
+        </div>
+
+        <div id="answerDiv">
+          <input type="text" name="answer">
+        </div><br/>
+
+        <input type="button" id="nextBtn" name="nextBtn" value="Next >>">
+        <input type="button" id="submitBtn" name="nextBtn" value="Submit">
+        <p id="score"></p>
       </div>
-      
-      <div id="answerDiv">
-        <input type="text" name="answer">
-      </div><br/>
-      
-      <input type="button" id="nextBtn" name="nextBtn" value="Next >>">
-      <input type="button" id="submitBtn" name="nextBtn" value="Submit">
-      <p id="score"></p>
     </div>
     <script src="js/arithmeticQuiz.js" type="text/javascript"></script>
   </body>
