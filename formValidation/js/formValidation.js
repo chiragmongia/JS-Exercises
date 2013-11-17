@@ -16,7 +16,7 @@ formValidation.prototype = {
 
   validateForm: function() {
     var obj = this;
-    obj.form.onsubmit = function() {
+    this.form.onsubmit = function() {
       if ( obj.validatePresence() && obj.validateaboutMeLength() && obj.validateNotifyCheckbox() ) {
         return true;
       }
@@ -25,32 +25,30 @@ formValidation.prototype = {
   },
 
   validatePresence: function() {
-    var obj = this;
-    for (var i = 0; i < obj.form.elements.length; i++) {
-      if (obj.form.elements[i].value == "") {
-        alert(obj.form.elements[i].name + " cannot be blank");
-        obj.form.elements[i].focus();
+    for (var i = 0; i < this.form.elements.length; i++) {
+      if (!this.form.elements[i].value.trim()) {
+        alert(this.form.elements[i].name + " cannot be blank");
+        this.form.elements[i].focus();
         return false;
       }
+      this.form.elements[i].value = this.form.elements[i].value.trim();
     }
     return true;
   },
 
   validateaboutMeLength: function() {
-    var obj = this;
-    if(obj.aboutMe.value.length < 50) {
+    if(this.aboutMe.value.length < 50) {
       alert("About Me should contain atleast 50 characters.");
-      obj.aboutMe.focus();
+      this.aboutMe.focus();
       return false;
     }
     return true;
   },
 
   validateNotifyCheckbox: function() {
-    var obj = this;
-    if(!obj.notification.checked) {
+    if(!this.notification.checked) {
       alert("Plese confirm to receive notifications of comments");
-      obj.notification.focus();
+      this.notification.focus();
       return false;
     }
     return true;
