@@ -1,3 +1,7 @@
-input:focus {
+input[type="text"]:focus {
   background: yellow;
+}
+
+input[type="text"] {
+  border: solid 1px;
 }
