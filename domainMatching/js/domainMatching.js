@@ -1,57 +1,55 @@
-var url = function() {
+var Regex = {
+  urlPattern: /^https?:\/\/((?:[a-zA-Z0-9]+\.)+)?([a-zA-Z0-9]+\.+[a-zA-Z0-9]{2,4}$)/i
+}
+
+var Url = function() {
   this.init();
 }
 
-url.prototype = {
+Url.prototype = {
   init: function() {
     this.inputUrl = document.getElementById("url");
     this.form = document.getElementById("form");
-    this.urlPattern = /(^https?\:\/\/(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i;
-    this.BindFormSubmitEvent();
+    this.bindFormSubmitEvent();
   },
 
-  BindFormSubmitEvent: function() {
+  bindFormSubmitEvent: function() {
     var obj = this;
-    obj.form.onsubmit = function() {
-      if (obj.validateUrlFormat() && obj.extractSubDomainFromUrl()) {
-        return true;
-      }
-      return false;
+    this.form.onsubmit = function() {
+      return (obj.validateUrlFormat() && obj.extractSubDomainFromUrl());
     }
   },
 
   validateUrlFormat: function() {
     var obj = this;
-    if (obj.inputUrl.value == "") {
+    if (!this.inputUrl.value.trim()) {
       alert("Url cannot be blank");
-      obj.inputUrl.focus();
-      return false;
-    }
-
-    else if (!obj.urlPattern.test(obj.inputUrl.value)) {
-      alert("Invalid url. Please enter a url in \"http://\" format");
-      obj.inputUrl.focus();
+      this.inputUrl.focus();
       return false;
     }
     return true;
   },
 
   extractSubDomainFromUrl: function() {
-    var obj = this;
-    var domain = [];
-    var subDomain = [];
-    var regex = /((?:\w+\.)+)?(\w+\.+\w+)/i;
-    var inputUrlDomain = obj.inputUrl.value.match(regex);
+    var domain,
+        subDomain;
 
-    domain = inputUrlDomain[2];
-    
-    if (inputUrlDomain[1] === undefined)
-      alert("Domain: " + domain);
-    else {
-      subDomain = inputUrlDomain[1].slice(0, -1);
-      alert("Domain: " + domain + ", SubDomain: " + subDomain);
+    if (!Regex.urlPattern.test(this.inputUrl.value.trim())) {
+      alert("Invalid url. Please enter a url in \"http://\" format");
+      this.inputUrl.focus();
+      return false;
     }
-  }   
+    else {
+      domain = RegExp.$2;
+      if (!RegExp.$1)
+        alert("Domain: " + domain);
+      else {
+        subDomain = RegExp.$1.slice(0, -1);
+        alert("Domain: " + domain + ", SubDomain: " + subDomain);
+      }
+      return true;
+    }
+  }
 }
 
-var obj = new url();
+var url = new Url();
