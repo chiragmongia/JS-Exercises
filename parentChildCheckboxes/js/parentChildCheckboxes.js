@@ -1,29 +1,20 @@
-var MenuItems = function() {
-  this.init();
+var MenuItems = function(parentElement) {
+  this.init(parentElement);
 };
 
 MenuItems.prototype = {
-  init: function() {
-    this.parentCheckBox = document.getElementsByName("check");
-    this.showOnCheck();
+  init: function(parentElement) {
+    this.childCheckBoxes = parentElement.parentNode.getElementsByClassName("childCheck");
+    this.childBlock = parentElement.parentNode.getElementsByTagName("ul");
+    this.showChildOnParentCheck(parentElement);
   },
 
-  showOnCheck: function() {
+  showChildOnParentCheck: function(parentElement) {
     var obj = this;
-    for (var i = 0; i < obj.parentCheckBox.length; i++) {
-      this.parentCheckBox[i].onclick = function() {
-        if (this.checked) {
-          this.parentNode.getElementsByTagName("ul")[0].style.display = "block";
-          this.scrollIntoView(true);
-          this.childCheckBoxes = this.parentNode.getElementsByClassName("childCheck");
-          obj.changeStateForCheckboxes(this.childCheckBoxes, true);
-        }
-
-        else {
-          this.parentNode.getElementsByTagName("ul")[0].style.display = "none";
-          obj.changeStateForCheckboxes(this.childCheckBoxes, false);
-        }
-      }
+    parentElement.onclick = function() {
+      this.checked ? obj.childBlock[0].style.display = "block" : obj.childBlock[0].style.display = "none";
+      this.scrollIntoView(true);
+      obj.changeStateForCheckboxes(obj.childCheckBoxes, this.checked);
     }
   },
 
@@ -33,4 +24,9 @@ MenuItems.prototype = {
   }
 }
 
-var object = new MenuItems();
+window.onload = function() {
+  var parentCheck = document.getElementsByClassName("parentCheck");
+  for (var i = 0; i < parentCheck.length; i++) {
+    var obj = new MenuItems(parentCheck[i]);
+  }
+}
