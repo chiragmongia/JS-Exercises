@@ -8,7 +8,6 @@ User.prototype = {
   inputVal: null,
 
   init: function() {
-    // this.inputVal;
     this.readNameAndTrim('first');
     this.readNameAndTrim('last');
     this.displayNameInDocument();
