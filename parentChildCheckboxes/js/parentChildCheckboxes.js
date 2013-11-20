@@ -5,14 +5,14 @@ var MenuItems = function(parentElement) {
 MenuItems.prototype = {
   init: function(parentElement) {
     this.childCheckBoxes = parentElement.parentNode.getElementsByClassName("childCheck");
-    this.childBlock = parentElement.parentNode.getElementsByTagName("ul");
+    this.childBlock = parentElement.parentNode.getElementsByTagName("ul")[0];
     this.showChildOnParentCheck(parentElement);
   },
 
   showChildOnParentCheck: function(parentElement) {
     var obj = this;
     parentElement.onclick = function() {
-      this.checked ? obj.childBlock[0].style.display = "block" : obj.childBlock[0].style.display = "none";
+      obj.childBlock.style.display = this.checked ?  "block" : "none";
       this.scrollIntoView(true);
       obj.changeStateForCheckboxes(obj.childCheckBoxes, this.checked);
     }
@@ -24,9 +24,11 @@ MenuItems.prototype = {
   }
 }
 
+MenuItems.objectCollection = []; //Class variable to store collection of objects
+
 window.onload = function() {
   var parentCheck = document.getElementsByClassName("parentCheck");
   for (var i = 0; i < parentCheck.length; i++) {
-    var obj = new MenuItems(parentCheck[i]);
+    MenuItems.objectCollection.push(new MenuItems(parentCheck[i]));
   }
 }
