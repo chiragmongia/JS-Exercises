@@ -4,73 +4,88 @@ var Quiz = function() {
 
 Quiz.prototype = {
   init: function() {
-    this.result;
-    this.questionData = [];
-    this.correctAnswerCount  = 0;
-    this.maxQuestions        = 20;
-    this.questionString      = [];
-    this.answer              = document.getElementsByName("answer")[0];
-    this.questionDiv         = document.getElementById("question");
-    this.nextBtn             = document.getElementById("nextBtn");
-    this.submitBtn           = document.getElementById("submitBtn");
+    // initialization
+    this.questionData = {};
+    this.correctAnswerCount     = 0;
+    this.maxQuestions           = 20;
+    this.questionString         = [];
+    this.answer                 = document.getElementsByName("answer")[0];
+    this.scoreTextElement       = document.getElementById("score");
+    this.questionDiv            = document.getElementById("question");
+    this.nextBtn                = document.getElementById("nextBtn");
+    this.submitBtn              = document.getElementById("submitBtn");
+    this.firstOperandElement    = document.getElementById("operand1");
+    this.secondOperandElement   = document.getElementById("operand2");
+    this.operatorSymbolElement  = document.getElementById("operator");    
+    this.questionNumber         = document.getElementById("questionNumber");
+
+    // invoke methods
     this.generateQuestions();
     this.BindEventForSubmitButton();
     this.evaluateResultOnNextButtonClick();
   },
 
+  generateRandomNumAndOperator: function() {
+    this.operator;
+    this.operatorSymbol;
+    this.number1        = Math.floor((Math.random() * 20) + 1);
+    this.number2        = Math.floor((Math.random() * 20) + 1);
+    this.numForOperator = Math.floor((Math.random() * 4) + 1);
+
+    switch(this.numForOperator) {
+      case 1: this.operator = function(first, second) {
+                           return first + second;
+                         };
+              this.operatorSymbol = "+";
+              break;
+
+      case 2: this.operator = function(first, second) {
+                           return first - second;
+                         };
+              this.operatorSymbol = "-";
+              break;
+
+      case 3: this.operator = function(first, second) {
+                           return first * second;
+                         };
+              this.operatorSymbol = "*";
+              break;
+
+      case 4: this.operator = function(first, second) {
+                           return first / second;
+                         };;
+              this.operatorSymbol = "/";
+              break;
+    }
+  },
+
   generateQuestions: function() {
-    var obj = this;
-    var operator,
-        operatorSymbol,
-        i;
-
-    for ( i = 0; i < this.maxQuestions; i++) {
-      var number1 = Math.floor((Math.random() * 20) + 1);
-      var number2 = Math.floor((Math.random() * 20) + 1);
-      var numForOperator = Math.floor((Math.random() * 4) + 1);
-
-      switch(numForOperator) {
-        case 1: operator = function(first, second) {
-                             return first + second;
-                           };
-                operatorSymbol = "+";
-                break;
-
-        case 2: operator = function(first, second) {
-                             return first - second;
-                           };
-                operatorSymbol = "-";
-                break;
-
-        case 3: operator = function(first, second) {
-                             return first * second;
-                           };
-                operatorSymbol = "*";
-                break;
-
-        case 4: operator = function(first, second) {
-                             return first / second;
-                           };;
-                operatorSymbol = "/";
-                break;
-      }
-
-      this.questionData.push(
-        { "id": (i+1), 
-          "number1": number1, 
-          "number2": number2,
-          "operator": operator,
-          "operatorSymbol": operatorSymbol,
-          "correctAnswer": "", 
-          "markedAnswer": "", 
-          "answerStatus": "" }
-      );
+    for ( i = 1; i <= this.maxQuestions; i++) {
+      this.generateRandomNumAndOperator();
+      this.questionData[i] = 
+        {
+          "number1":        this.number1, 
+          "number2":        this.number2,
+          "operator":       this.operator,
+          "operatorSymbol": this.operatorSymbol,
+          "correctAnswer":  "", 
+          "markedAnswer":   "", 
+          "answerStatus":   ""
+        };
 
       this.questionData[i].correctAnswer = this.questionData[i].operator(this.questionData[i].number1, this.questionData[i].number2);
       this.questionData[i].correctAnswer = Math.round(this.questionData[i].correctAnswer * 100)/100;
-      this.questionString[i] = ("Question-" + (i+1) + ": <br/>" + this.questionData[i].number1 + " " + this.questionData[i].operatorSymbol + " " + this.questionData[i].number2 + " = ");
+      this.questionString[i] = ("Question-" + (i) + ": <br/>" + this.questionData[i].number1 + " " + this.questionData[i].operatorSymbol + " " + this.questionData[i].number2 + " = ");
     }
   },
+
+  displayQuestion: function(questionId) {
+    this.scoreTextElement.innerHTML      = ("Score: " + this.correctAnswerCount);
+    this.firstOperandElement.innerHTML   = this.questionData[questionId].number1;
+    this.secondOperandElement.innerHTML  = this.questionData[questionId].number2;
+    this.operatorSymbolElement.innerHTML = this.questionData[questionId].operatorSymbol;
+    this.questionNumber.innerHTML        = questionId;
+  }, 
 
   BindEventForSubmitButton: function() {
     var obj = this;
@@ -81,44 +96,40 @@ Quiz.prototype = {
 
   evaluateResultOnNextButtonClick: function() {
     var obj = this,
-        score = document.getElementById("score");
-        score.innerHTML = ("Score: " + this.correctAnswerCount);
-        i = 0;
+        questionId = 1;
 
-    this.questionDiv.innerHTML = this.questionString[i];
-
+    this.displayQuestion(1);
     obj.nextBtn.addEventListener("click", function() {
       if (!obj.answer.value.trim()) {
-        obj.questionData[i].markedAnswer = "Unattempted!"
+        obj.questionData[questionId].markedAnswer = "Unattempted!"
       }
 
       else {
-        if ( Math.round(obj.answer.value * 100) / 100 ==  obj.questionData[i].correctAnswer) {
+        obj.questionData[questionId].markedAnswer = Math.round(obj.answer.value * 100) / 100;
+
+        if ( obj.questionData[questionId].markedAnswer ==  obj.questionData[questionId].correctAnswer) {
           ++obj.correctAnswerCount;
-          obj.questionData[i].answerStatus = 1;
-          obj.questionData[i].markedAnswer = Math.round(obj.answer.value * 100) / 100;
-          score.innerHTML = ("Score: " + obj.correctAnswerCount);
+          obj.questionData[questionId].answerStatus = 1;
         }
         else {
-          obj.questionData[i].answerStatus = 0;
-          obj.questionData[i].markedAnswer = Math.round(obj.answer.value * 100) / 100;
+          obj.questionData[questionId].answerStatus = 0;
         }
       }
 
-      if ( i >= (obj.maxQuestions-1) ) {
+      if ( questionId == (obj.maxQuestions) ) {
         obj.displayResult();
       }
-
-      obj.questionDiv.innerHTML = obj.questionString[i+1];
-      obj.answer.value = "";
-      obj.answer.focus();
-      ++i;
+      else {
+        obj.displayQuestion(questionId+1);
+        obj.answer.value = "";
+        obj.answer.focus();
+        ++questionId;
+      }
     }, false);
   },
 
   displayResult: function() {
-    var obj          = this,
-        i,
+    var i,
         resultString = [],
         div          = document.createElement("div"),
         containerDiv = document.createElement("div"),
@@ -128,8 +139,7 @@ Quiz.prototype = {
     heading.setAttribute( "class", "resultHeading");
     heading.appendChild(headingText);
     containerDiv.appendChild(heading);
-
-    for ( i = 0; i < this.questionString.length; i++) {
+    for ( i = 1; i <= this.questionString.length - 1; i++) {
       if (this.questionData[i].answerStatus == 1) {
         resultString.push(this.questionString[i] + this.questionData[i].correctAnswer + " Correct!");
       }
@@ -146,7 +156,7 @@ Quiz.prototype = {
     }
 
     containerDiv.appendChild(div);
-    document.write(containerDiv.innerHTML);
+    document.body.innerHTML = containerDiv.innerHTML;
   }
 }
 
