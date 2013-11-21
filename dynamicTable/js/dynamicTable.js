@@ -1,121 +1,125 @@
-var table = function() {
+var Table = function() {
   this.init();
 }
 
-table.prototype = {
+Table.prototype = {
   init: function() {
-    this.counter = 1;
-    this.table = document.getElementById("table");
-    this.addRowbutton = document.getElementById("addRow");
-    this.bindAddRowEvent();
+    this.table = document.getElementById("dynamicTable"); 
+    this.bindEvents();
   },
 
-  bindAddRowEvent: function() {
+  bindEvents: function() {
     var obj = this;
-    obj.addRowbutton.onclick = function() {
+    this.addBtn = document.getElementById("addRow");
+    this.addBtn.onclick = function() {
       obj.addRow();
     }
   },
 
-  editRow: function(rowElement) {
-    var obj = this;
-    rowElement.cells[0].removeChild(rowElement.cells[0].childNodes[0])
-    rowElement.cells[1].removeChild(rowElement.cells[1].childNodes[0])
-    rowElement.cells[2].removeChild(rowElement.cells[2].childNodes[0])
-    rowElement.cells[2].removeChild(rowElement.cells[2].childNodes[0])
-
-    this.newfirstnameElement = document.createElement("input");
-    this.newfirstnameElement.type = "text";
-    this.newfirstnameElement.setAttribute("class", "name");
-    rowElement.cells[0].appendChild(this.newfirstnameElement);
-
-    this.newemailElement = document.createElement("input");
-    this.newemailElement.type = "email";
-    this.newemailElement.setAttribute("class", "email");
-    rowElement.cells[1].appendChild(this.newemailElement);
-
-    this.newsaveButtonElement = document.createElement("input");
-    this.newsaveButtonElement.type = "button";
-    this.newsaveButtonElement.value = "save";
-    this.newsaveButtonElement.setAttribute("rowid", parseInt(rowElement.id));
-    this.newsaveButtonElement.onclick = function() {
-      obj.save(this);
-    }
-    rowElement.cells[2].appendChild(this.newsaveButtonElement);
+  deleteRow: function() {
+    var row = this.parentNode.parentNode;
+    debugger
+    document.getElementById("dynamicTable").deleteRow(row.rowIndex);
   },
 
-  removeRow: function(rowElement) {
-    this.table.deleteRow(parseInt(rowElement.id));
-  },
+  editRow: function() {
+    var row = this.parentNode.parentNode, 
+        i     = 0,
+        cell0,
+        cell1,
+        cell2;
 
-  save: function(saveButton) {
-    this.rowElement = document.getElementById(saveButton.getAttribute("rowid"));
-    this.fnameDiv = document.createElement('div');
-    this.emailDiv = document.createElement('div');
-    var obj = this;
-
-    this.editLink = document.createElement("a");
-    this.editLinkText = document.createTextNode("Edit");
-    this.editLink.appendChild(this.editLinkText);
-    this.editLink.name = "edit";
-    this.editLink.onclick = function() {
-      obj.editRow(obj.rowElement);
-    }
-
-    this.deleteLink = document.createElement("a");
-    this.deleteLinkText = document.createTextNode("Delete");
-    this.deleteLink.appendChild(this.deleteLinkText);
-    this.deleteLink.name = "delete";
-    this.deleteLink.onclick = function() {
-      obj.removeRow(obj.rowElement);
-    }
-
-    this.fname = this.rowElement.getElementsByClassName("name")[0];
-    this.email = this.rowElement.getElementsByClassName("email")[0];
+    cell0 = table.createInputElement(cell0);
+    cell0.value = row.cells[0].firstChild.nodeValue;
     
-    if (this.fname.value == "")
-      alert("Name can't be blank");
-    else if (this.email.value == "")
-      alert("Email can't be blank");
-    else {
-      this.fnameDiv.innerHTML = this.fname.value;
-      this.emailDiv.innerHTML = this.email.value;
-      // this.rowElement.cells[0].replaceChild(this.fnameDiv, obj.fname);
-      // this.rowElement.cells[1].replaceChild(this.emailDiv, obj.email);
-      this.rowElement.cells[2].replaceChild(obj.editLink, saveButton);
-      this.rowElement.cells[2].appendChild(obj.deleteLink);
+    cell1 = table.createInputElement(cell1);
+    cell1.value = row.cells[1].firstChild.nodeValue;
+    
+    cell2 = table.createInputElement(cell2);
+    cell2.type    = "button";     // Overriding cell2 type from "text" to "button"
+    cell2.value   = "save";
+    cell2.onclick = table.save;
+    
+    for (i = 2; i >= 0; i = i - 1) { 
+      row.deleteCell(i); 
     }
+    
+    for (i = 0; i < 3; i = i + 1) { 
+      row.insertCell(i);
+    }
+    
+    row.cells[0].appendChild(cell0);
+    row.cells[1].appendChild(cell1);
+    row.cells[2].appendChild(cell2);
+  },
+
+  createAnchorTag: function(element) {
+    element = document.createElement("a");
+    element.href = "#";
+    return element;
+  },
+
+  save: function() {
+    var i     = 0,
+        row   = this.parentNode.parentNode,
+        name  = row.cells[0].getElementsByTagName("input")[0].value,
+        email = row.cells[1].getElementsByTagName("input")[0].value,
+        edit  = table.createAnchorTag(edit),
+        del   = table.createAnchorTag(del);
+    
+    edit.appendChild(document.createTextNode("Edit"));
+    del.appendChild(document.createTextNode("Delete"));
+    edit.onclick = table.editRow;
+    del.onclick  = table.deleteRow;
+    
+    for (i = 2; i >= 0; i--) { 
+      row.deleteCell(i); 
+    }
+    
+    for (i = 0; i < 3; i++) { 
+      row.insertCell(i); 
+    }
+
+    inputNameValue = document.createTextNode(name);
+    row.cells[0].appendChild(inputNameValue);
+    inputEmailValue = document.createTextNode(email);
+    row.cells[1].appendChild(inputEmailValue);
+    
+    row.cells[2].appendChild(edit);
+    row.cells[2].appendChild(document.createTextNode(" / "));
+    row.cells[2].appendChild(del);
   },
 
   addRow: function() {
-    var obj = this;
-    this.rowCount = obj.table.rows.length;
-    this.row = obj.table.insertRow(this.rowCount);
-    this.row.id = obj.counter;
+    var row = this.table.rows.length,
+        cell0,
+        cell1,
+        cell2,
+        i = 0;
     
-    this.cell1 = this.row.insertCell(0);
-    this.firstnameElement = document.createElement("input");
-    this.firstnameElement.type = "text";
-    this.firstnameElement.setAttribute("class", "name");
-    this.cell1.appendChild(this.firstnameElement);
-
-    this.cell2 = this.row.insertCell(1);
-    this.emailElement = document.createElement("input");
-    this.emailElement.type = "email";
-    this.emailElement.setAttribute("class", "email");
-    this.cell2.appendChild(this.emailElement);
-
-    this.cell3 = this.row.insertCell(2);
-    this.saveButtonElement = document.createElement("input");
-    this.saveButtonElement.type = "button";
-    this.saveButtonElement.value = "save";
-    this.saveButtonElement.setAttribute("rowid", obj.counter);
-    this.saveButtonElement.onclick = function() {
-      obj.save(this);
+    cell0 = this.createInputElement(cell0);
+    cell1 = this.createInputElement(cell1);
+    cell2 = this.createInputElement(cell2);
+    cell2.type    = "button";     // Overriding cell2 type from "text" to "button"
+    cell2.value   = "save";
+    cell2.onclick = this.save;
+    
+    this.table.insertRow(row);
+    for (i = 0; i < 3; i++) { 
+      this.table.rows[row].insertCell(i); 
     }
-    this.cell3.appendChild(this.saveButtonElement);
-    obj.counter++;
-  },
+
+    this.table.rows[row].cells[0].appendChild(cell0);
+    this.table.rows[row].cells[1].appendChild(cell1);
+    this.table.rows[row].cells[2].appendChild(cell2);
+    },
+
+  createInputElement: function(element) {
+    element = document.createElement("input");
+    element.type = "text";
+    return element;
+  }
+
 }
 
-var table = new table();
+var table = new Table();
