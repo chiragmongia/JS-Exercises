@@ -24,11 +24,10 @@ MenuItem.prototype = {
   }
 }
 
-MenuItem.objectCollection = []; //Class variable to store collection of objects
-
 window.onload = function() {
+  var objectCollection = [];
   var parentCheck = document.getElementsByClassName("parentCheck");
   for (var i = 0; i < parentCheck.length; i++) {
-    MenuItem.objectCollection.push(new MenuItem(parentCheck[i]));
+    objectCollection.push(new MenuItem(parentCheck[i]));
   }
 }
