@@ -56,11 +56,16 @@ h1 {
 
 .resultHeading {
   text-align: center;
-  font-size: 60px;
+  margin: 0px;
 }
 
 .resultParagraph {
   margin: 30px 0px;
   text-align: center;
   font-size: 24px;
+}
+
+.displayInline {
+  display: inline;
+  margin: 0px 5px;
 }
