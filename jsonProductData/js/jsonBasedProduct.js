@@ -5,6 +5,7 @@ var Grid = function() {
 Grid.prototype = {
   init: function() {
     this.gridContainer = document.getElementById("grid");
+    this.myProducts = productData;
     this.list = document.getElementById("sortOption");
     this.createProductContainer(productData);
     this.bindEvents();
@@ -35,37 +36,36 @@ Grid.prototype = {
   },
 
   sortProducts: function(selectedVal) {
-    myProducts = productData;
-    myProducts.sort(this.sorterFunc(selectedVal));
+    this.myProducts.sort(this.sorterFunc(selectedVal));
     this.gridContainer.removeChild(this.gridChild);
-    this.createProductContainer(myProducts);
+    this.createProductContainer(this.myProducts);
   },
 
-  strCompare: function(a, b, selectedVal) {
-    return (a[selectedVal] > b[selectedVal]) ? 1 : (a[selectedVal] < b[selectedVal]) ? -1 : 0;
+  strCompare: function(a, b) {
+    return (a > b) ? 1 : (a < b) ? -1 : 0;
   },
 
   sorterFunc: function(selectedVal) {
     var obj = this;
     if (selectedVal == "name") {
       return function(a,b) {
-        a[selectedVal] = parseInt(a[selectedVal]);
-        b[selectedVal] = parseInt(b[selectedVal]);
-        return obj.strCompare(a, b, selectedVal);
+        a = parseInt(a[selectedVal]);
+        b = parseInt(b[selectedVal]);
+        return obj.strCompare(a, b);
       }
     }
 
     else if (selectedVal == "sold_out") {
       return function(a,b) {
-        a[selectedVal] = parseInt(a.sold_out);
-        b[selectedVal] = parseInt(b.sold_out);
-        return obj.strCompare(a, b, selectedVal);
+        a = parseInt(a.sold_out);
+        b = parseInt(b.sold_out);
+        return obj.strCompare(a, b);
       }
     }
 
     else {
       return function(a,b) {
-        return obj.strCompare(a,b,selectedVal);
+        return obj.strCompare(a[selectedVal], b[selectedVal]);
       }
     }
   }
