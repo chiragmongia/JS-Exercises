@@ -7,7 +7,7 @@ Grid.prototype = {
     this.gridContainer = document.getElementById("grid");
     this.myProducts = productData;
     this.list = document.getElementById("sortOption");
-    this.createProductContainer(productData);
+    this.createProductContainer(this.myProducts);
     this.bindEvents();
   },
 
