@@ -70,7 +70,6 @@ Quiz.prototype = {
           "operatorSymbol": this.operatorSymbol,
           "correctAnswer":  "", 
           "markedAnswer":   "", 
-          "answerStatus":   ""
         };
 
       this.questionData[i].correctAnswer = this.questionData[i].operator(this.questionData[i].number1, this.questionData[i].number2);
@@ -98,54 +97,55 @@ Quiz.prototype = {
     var obj = this,
         questionId = 1;
 
-    this.displayQuestion(1);
     obj.nextBtn.addEventListener("click", function() {
       if (!obj.answer.value.trim()) {
-        obj.questionData[questionId].markedAnswer = "Unattempted!"
+        obj.questionData[questionId].markedAnswer = "Unattempted!";
       }
-
       else {
         obj.questionData[questionId].markedAnswer = Math.round(obj.answer.value * 100) / 100;
-
-        if ( obj.questionData[questionId].markedAnswer ==  obj.questionData[questionId].correctAnswer) {
+        if ( obj.questionData[questionId].markedAnswer ==  obj.questionData[questionId].correctAnswer)
           ++obj.correctAnswerCount;
-          obj.questionData[questionId].answerStatus = 1;
-        }
-        else {
-          obj.questionData[questionId].answerStatus = 0;
-        }
       }
 
-      if ( questionId == (obj.maxQuestions) ) {
-        obj.displayResult();
-      }
-      else {
-        obj.displayQuestion(questionId+1);
-        obj.answer.value = "";
-        obj.answer.focus();
-        ++questionId;
-      }
+      questionId = obj.showNextQuestion(questionId);
     }, false);
+  },
+
+  showNextQuestion: function(questionId) {
+    if ( questionId == (this.maxQuestions) ) {
+      this.displayResult();
+    }
+    else {
+      this.displayQuestion(questionId+1);
+      this.answer.value = "";
+      this.answer.focus();
+      return ++questionId;
+    }
   },
 
   displayResult: function() {
     var i,
-        resultString = [],
-        div          = document.createElement("div"),
-        containerDiv = document.createElement("div"),
-        heading      = document.createElement("h1"),
-        headingText  = document.createTextNode("RESULT");
+        resultString   = [],
+        div            = document.createElement("div"),
+        containerDiv   = document.createElement("div"),
+        finalScore     = document.createElement("p"),
+        finalScoreText = document.createTextNode("SCORE");
+        heading        = document.createElement("h1"),
+        headingText    = document.createTextNode("RESULT");
     
     heading.setAttribute( "class", "resultHeading");
     heading.appendChild(headingText);
     containerDiv.appendChild(heading);
+
+    finalScore.setAttribute("class", "finalScore");
+    finalScore.innerHTML = ("<b>Score:</b> " + this.correctAnswerCount);
+    containerDiv.appendChild(finalScore);
+
     for ( i = 1; i <= this.questionString.length - 1; i++) {
-      if (this.questionData[i].answerStatus == 1) {
-        resultString.push(this.questionString[i] + this.questionData[i].correctAnswer + " Correct!");
-      }
-      else {
+      if (this.questionData[i].correctAnswer == this.questionData[i].markedAnswer)
+        resultString.push(this.questionString[i] + this.questionData[i].correctAnswer + " Correct!"); 
+      else
         resultString.push(this.questionString[i] + this.questionData[i].markedAnswer + "<br/> Correct answer is " + this.questionData[i].correctAnswer);
-      }
     }
 
     for ( i = 0; i < resultString.length; i++) {
@@ -166,6 +166,7 @@ window.onload = function() {
 
   startBtn.addEventListener("click", function() {
     var arithmeticQuiz = new Quiz();
+    arithmeticQuiz.displayQuestion(1);
     this.style.display = "none";
     quizContainer.style.display = "block";
   }, false);
