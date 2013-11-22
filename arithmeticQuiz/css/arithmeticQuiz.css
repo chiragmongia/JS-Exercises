@@ -65,6 +65,12 @@ h1 {
   font-size: 24px;
 }
 
+.finalScore {
+  font-size: 36px;
+  text-align: center;
+  margin: 15px 0px 60px;
+}
+
 .displayInline {
   display: inline;
   margin: 0px 5px;
