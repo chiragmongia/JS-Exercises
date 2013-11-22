@@ -1,10 +1,11 @@
+var MAX_COLUMNS = 3;
 var Table = function() {
   this.init();
 }
 
 Table.prototype = {
   init: function() {
-    this.table = document.getElementById("dynamicTable"); 
+    this.table = document.getElementById("dynamicTable");
     this.bindEvents();
   },
 
@@ -39,11 +40,11 @@ Table.prototype = {
     cell2.value   = "save";
     cell2.onclick = table.save;
     
-    for (i = 2; i >= 0; i--) {
+    for (i = MAX_COLUMNS-1; i >= 0; i--) {
       row.deleteCell(i); 
     }
     
-    for (i = 0; i <= 2; i++) { 
+    for (i = 0; i <= MAX_COLUMNS-1; i++) { 
       row.insertCell(i);
     }
     
@@ -71,11 +72,11 @@ Table.prototype = {
     edit.onclick = table.editRow;
     del.onclick  = table.deleteRow;
     
-    for (i = 2; i >= 0; i--) { 
+    for (i = MAX_COLUMNS-1; i >= 0; i--) { 
       row.deleteCell(i); 
     }
     
-    for (i = 0; i <= 2; i++) { 
+    for (i = 0; i <= MAX_COLUMNS-1; i++) { 
       row.insertCell(i); 
     }
 
