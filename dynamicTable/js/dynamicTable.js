@@ -18,7 +18,6 @@ Table.prototype = {
 
   deleteRow: function() {
     var row = this.parentNode.parentNode;
-    debugger
     document.getElementById("dynamicTable").deleteRow(row.rowIndex);
   },
 
@@ -40,11 +39,11 @@ Table.prototype = {
     cell2.value   = "save";
     cell2.onclick = table.save;
     
-    for (i = 2; i >= 0; i = i - 1) { 
+    for (i = 2; i >= 0; i--) {
       row.deleteCell(i); 
     }
     
-    for (i = 0; i < 3; i = i + 1) { 
+    for (i = 0; i <= 2; i++) { 
       row.insertCell(i);
     }
     
@@ -76,7 +75,7 @@ Table.prototype = {
       row.deleteCell(i); 
     }
     
-    for (i = 0; i < 3; i++) { 
+    for (i = 0; i <= 2; i++) { 
       row.insertCell(i); 
     }
 
