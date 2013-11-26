@@ -5,17 +5,8 @@ var EatingPoint = function() {
 EatingPoint.prototype = {
   init: function() {
     //initialization
-    this.orders                = {};
-    this.currentOrder          = document.getElementById("currentOrder");
     this.menuItems             = document.getElementsByClassName("menuItem");
     this.orderAmountDiv        = document.getElementById("orderAmountDiv");
-    this.placeOrderBtn         = document.getElementById("placeOrder");
-    this.dailyOrders           = document.getElementById("dailyOrders");
-    this.currentOrderContainer = document.getElementById("currentOrderContainer");
-    this.totalSale             = document.getElementById("totalSale");
-    this.totalSaleAmountSpan   = document.getElementById("totalSaleAmount");
-    this.orderDetails          = document.getElementById("orderDetails");
-    this.submenu               = document.getElementsByClassName("submenu");
     this.breadsOrderElement    = document.getElementById("breadsOrder");
     this.fillingOrderElement   = document.getElementById("fillingOrder");
     this.saucesOrderElement    = document.getElementById("saucesOrder");
@@ -34,15 +25,15 @@ EatingPoint.prototype = {
 
   bindEvents: function() {
     var obj = this;
-
+    var placeOrderBtn = document.getElementById("placeOrder");
     for ( var i = 0; i < this.menuItems.length; i++ ) {
       this.menuItems[i].onclick = function() {
-        obj.placeOrderBtn.style.display = "inline";
+        placeOrderBtn.style.display = "inline";
         obj.highlightSelectedItem(this);
       }
     }
 
-    this.placeOrderBtn.onclick = function() {
+    placeOrderBtn.onclick = function() {
       obj.inputUserDetails();
       this.style.display = "none";
     }
@@ -91,55 +82,58 @@ EatingPoint.prototype = {
   },
 
   inputUserDetails: function() {
-    var fname = (prompt("Enter Customer's name") || "").trim();
+    var fname     = (prompt("Enter Customer's name") || "").trim();
+    var totalSale = document.getElementById("totalSale");
     while (!fname) {
       alert("Please enter Customer's name");
       fname = (prompt("Enter Customer's name") || "").trim();
     }
 
     ++this.orderId;
-    this.totalSale.style.display = "block";
+    totalSale.style.display = "block";
     var dailyOrdersContainer = document.getElementById("dailyOrdersContainer");
     dailyOrdersContainer.style.display = "block"
     this.populateAndDisplayOrdersList(this.orderId, fname);
   },
 
   populateAndDisplayOrdersList: function(orderId, fname) {
+    var currentOrderContainer   = document.getElementById("currentOrderContainer");
+    var totalSaleAmountSpan     = document.getElementById("totalSaleAmount");
     var currentOrderToOrderList = document.createElement("div");
-    var orderIdElement = document.createElement("p");
-    orderIdElement.setAttribute("class", "dailyOrderNumber")
-
+    var orderIdElement          = document.createElement("p");
+    var orderDetails            = document.getElementById("orderDetails");
+    
+    orderIdElement.setAttribute("class", "dailyOrderNumber");
     orderIdElement.innerHTML = ("Order Id: " + orderId + "<br/>Name: " + fname);
-    this.orderDetails.appendChild(orderIdElement);
+    orderDetails.appendChild(orderIdElement);
 
     currentOrderToOrderList.setAttribute("class", "setBorderBottom");
-    currentOrderToOrderList.innerHTML = this.currentOrderContainer.innerHTML;
-    this.orderDetails.appendChild(currentOrderToOrderList);
+    currentOrderToOrderList.innerHTML = currentOrderContainer.innerHTML;
+    orderDetails.appendChild(currentOrderToOrderList);
 
     this.totalSaleAmount += this.orderAmount;
-    this.totalSaleAmountSpan.innerHTML = this.totalSaleAmount;
+    totalSaleAmountSpan.innerHTML = this.totalSaleAmount;
 
     this.refreshCurrentOrder();
     this.unhighlighItems();
   },
 
   refreshCurrentOrder: function() {
-    this.orderAmountDiv.innerHTML = "";
-    this.breadsOrderElement.innerHTML = "";
+    this.orderAmountDiv.innerHTML      = "";
+    this.breadsOrderElement.innerHTML  = "";
     this.fillingOrderElement.innerHTML = "";
-    this.saucesOrderElement.innerHTML = "";
-    this.drinksOrderElement.innerHTML = "";
-    this.breadsOrderElement.value = 0;
-    this.fillingOrderElement.value = 0;
-    this.saucesOrderElement.value = 0;
-    this.drinksOrderElement.value = 0;
+    this.saucesOrderElement.innerHTML  = "";
+    this.drinksOrderElement.innerHTML  = "";
+    this.breadsOrderElement.value      = 0;
+    this.fillingOrderElement.value     = 0;
+    this.saucesOrderElement.value      = 0;
+    this.drinksOrderElement.value      = 0;
     this.orderAmount = 0;
   },
 
   unhighlighItems: function() {
-    for (var i = 0; i < this.menuItems.length; i++ ) {
+    for ( var i = 0; i < this.menuItems.length; i++ )
       this.menuItems[i].style.background = "white";
-    }
   }
 }
 
