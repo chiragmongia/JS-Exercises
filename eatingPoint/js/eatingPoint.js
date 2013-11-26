@@ -42,7 +42,7 @@ EatingPoint.prototype = {
       for (var j = 0; j < li[i].length; j++) {
         li[i][j].onclick = function() {
           obj.placeOrderBtn.style.display = "inline";
-          obj.displayCurrentOrder(this);
+          obj.highlightSelectedItem(this);
         }
       }
     }
@@ -53,7 +53,7 @@ EatingPoint.prototype = {
     }
   },
 
-  displayCurrentOrder: function(selectedItem) {
+  highlightSelectedItem: function(selectedItem) {
     for ( var i = 0; i < selectedItem.parentNode.children.length; i++ ) { 
       if ( selectedItem.parentNode.children[i].hasAttribute("selected")) {
         selectedItem.parentNode.children[i].setAttribute("style", "none");
@@ -63,6 +63,10 @@ EatingPoint.prototype = {
     selectedItem.style.background = "yellow";
     selectedItem.setAttribute("selected", "true");
 
+    this.displayCurrentOrder(selectedItem);
+  },
+
+  displayCurrentOrder: function(selectedItem) {
     if (selectedItem.parentNode.id == "breadsBlock") {
       this.breadsOrderElement.innerHTML = selectedItem.innerHTML;
       this.breadsOrderElement.value = selectedItem.value;
@@ -120,6 +124,7 @@ EatingPoint.prototype = {
     this.totalSaleAmountSpan.innerHTML = this.totalSaleAmount;
 
     this.refreshCurrentOrder();
+    this.unhighlighItems();
   },
 
   refreshCurrentOrder: function() {
@@ -133,6 +138,13 @@ EatingPoint.prototype = {
     this.saucesOrderElement.value = 0;
     this.drinksOrderElement.value = 0;
     this.orderAmount = 0;
+  },
+
+  unhighlighItems: function() {
+    var menuItems = document.getElementsByClassName("menuItem");
+    for (var i = 0; i < menuItems.length; i++ ) {
+      menuItems[i].style.background = "white";
+    }
   }
 }
 
