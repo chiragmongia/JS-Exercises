@@ -81,11 +81,3 @@ li {
   padding: 4px 8px 4px 10px;
   border-radius: 10px;
 }
-
-li:hover {
-  background: #FFFF66;
-}
-
-li:visited {
-  font-weight: bold;
-}
