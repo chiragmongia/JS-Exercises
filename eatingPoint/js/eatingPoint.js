@@ -1,6 +1,3 @@
-// Change drop downs to text
-// Bug: Drop down options can be multi selected from a single drop down.
-
 var EatingPoint = function() {
   this.init();
 }
