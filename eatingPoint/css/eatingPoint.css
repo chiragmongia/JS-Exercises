@@ -1,6 +1,9 @@
 .submenu {
   float: left;
-  margin: 0px 35px 40px;
+  margin: 0px 25px 40px;
+  padding: 0px 25px 30px;
+  border: solid 1px;
+  border-radius: 15px;
 }
 
 #currentOrderContainer {
