@@ -117,6 +117,7 @@ EatingPoint.prototype = {
     orderIdElement.innerHTML = ("Order Id: " + orderId + "<br/>Name: " + fname);
     this.orderDetails.appendChild(orderIdElement);
 
+    currentOrderToOrderList.setAttribute("class", "setBorderBottom");
     currentOrderToOrderList.innerHTML = this.currentOrderContainer.innerHTML;
     this.orderDetails.appendChild(currentOrderToOrderList);
 
