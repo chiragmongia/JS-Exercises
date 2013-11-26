@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/eatingPoint.css">
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <h1>Eating Point</h1>
+        <p id="totalSale">Total Sale: <span id="totalSaleAmount"></span></p>
+      </div>
+      
+      <div id="breads" class="submenu">
+        <h2>Breads</h2>
+        <ul id="breadsBlock" class="submenuBlock">
+          <li id="white" value="10">White 10</li>
+          <li id="brown" value="20">Brown 20</li>
+          <li id="multigrain" value="30">Multigrain 30</li>
+        </ul>
+      </div>
+
+      <div id="filling" class="submenu">
+        <h2>Filling</h2>
+        <ul id="fillingBlock" class="submenuBlock">
+          <li id="veg" value="20">Veg 20</li>
+          <li id="nonveg" value="40">Non Veg 40</li>
+        </ul>  
+      </div>
+
+      <div id="sauces" class="submenu">
+        <h2>Sauces</h2>
+        <ul id="saucesBlock" class="submenuBlock">
+          <li id="tomato" value="30">Tomato 30</li>
+          <li id="mayo" value="40">Mayo 40</li>
+          <li id="mint" value="50">Mint 50</li>
+        </ul>
+      </div>
+
+      <div id="drinks" class="submenu">
+        <h2>Drinks</h2>
+        <ul id="drinksBlock" class="submenuBlock">
+          <li id="coke" value="20">Coke 20</li>
+          <li id="Mojito" value="30">Mojito 30</li>
+        </ul>
+      </div>
+
+      <div id="currentOrderContainer">
+        <div id="currentOrder">
+          <p id="breadsOrder"></p>
+          <p id="fillingOrder"></p>
+          <p id="saucesOrder"></p>
+          <p id="drinksOrder"></p>
+        </div>
+        <p id="orderAmountDiv"></p>
+      </div>
+      <input type="button" id="placeOrder" value="Place Order">
+
+      <div id="dailyOrdersContainer">
+        <h2>Daily Orders</h2>
+        <div id="orderDetails">
+        </div>
+      </div>
+    </div>
+    
+    <script src="js/eatingPoint.js"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+.submenu {
+  float: left;
+  margin: 0px 35px 40px;
+}
+
+#currentOrderContainer {
+  clear: both;
+  font-size: 18px;
+  margin: 0px 35px;
+}
+
+#placeOrder {
+  display: none;
+  background: black;
+  color: white;
+  border: black;
+  margin: 25px 0px 0px 34px;
+  width: 106px;
+  height: 37px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+#orderAmount {
+  display: inline;  
+}
+
+#dailyOrdersContainer {
+  display: none;
+  position: absolute;
+  top: 115px;
+  right: 45px;
+  font-size: 18px;
+}
+
+.dailyOrderNumber {
+  font-style: italic;
+  font-weight: bold;
+}
+
+#orderAmountDiv {
+  font-weight: bold;
+}
+
+.itemSelect {
+
+}
+
+#header {
+  text-align: center;
+  font-size: 40px;
+  font-style: italic;
+  text-shadow: 2px 2px;
+  margin: 0px 0px 40px;
+}
+
+h2 {
+  font-style: italic;
+}
+
+h1 {
+  margin: 10px;
+}
+
+#totalSale {
+  display: none;
+  margin: 0px;
+  text-shadow: 1px 1px;
+  font-size: 30px;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: -47px;
+  font-size: 19px;
+}
+
+li {
+  margin: 10px 0px;
+  padding: 4px 8px 4px 10px;
+  border-radius: 10px;
+}
