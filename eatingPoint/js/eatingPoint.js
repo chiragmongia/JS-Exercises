@@ -7,6 +7,7 @@ EatingPoint.prototype = {
     //initialization
     this.orders                = {};
     this.currentOrder          = document.getElementById("currentOrder");
+    this.menuItems             = document.getElementsByClassName("menuItem");
     this.orderAmountDiv        = document.getElementById("orderAmountDiv");
     this.placeOrderBtn         = document.getElementById("placeOrder");
     this.dailyOrders           = document.getElementById("dailyOrders");
@@ -33,17 +34,11 @@ EatingPoint.prototype = {
 
   bindEvents: function() {
     var obj = this;
-    var li = [];
-    for (var i = 0; i < this.submenu.length; i++ ) {
-      li[i] = this.submenu[i].getElementsByTagName("ul")[0].children;
-    }
 
-    for (var i = 0; i < li.length; i++) {
-      for (var j = 0; j < li[i].length; j++) {
-        li[i][j].onclick = function() {
-          obj.placeOrderBtn.style.display = "inline";
-          obj.highlightSelectedItem(this);
-        }
+    for ( var i = 0; i < this.menuItems.length; i++ ) {
+      this.menuItems[i].onclick = function() {
+        obj.placeOrderBtn.style.display = "inline";
+        obj.highlightSelectedItem(this);
       }
     }
 
@@ -55,7 +50,7 @@ EatingPoint.prototype = {
 
   highlightSelectedItem: function(selectedItem) {
     for ( var i = 0; i < selectedItem.parentNode.children.length; i++ ) { 
-      if ( selectedItem.parentNode.children[i].hasAttribute("selected")) {
+      if ( selectedItem.parentNode.children[i].hasAttribute("selected") ) {
         selectedItem.parentNode.children[i].setAttribute("style", "none");
         selectedItem.parentNode.children[i].removeAttribute("selected");
       }
@@ -142,9 +137,8 @@ EatingPoint.prototype = {
   },
 
   unhighlighItems: function() {
-    var menuItems = document.getElementsByClassName("menuItem");
-    for (var i = 0; i < menuItems.length; i++ ) {
-      menuItems[i].style.background = "white";
+    for (var i = 0; i < this.menuItems.length; i++ ) {
+      this.menuItems[i].style.background = "white";
     }
   }
 }
