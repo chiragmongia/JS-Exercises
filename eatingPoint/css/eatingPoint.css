@@ -43,10 +43,6 @@
   font-weight: bold;
 }
 
-.itemSelect {
-
-}
-
 #header {
   text-align: center;
   font-size: 40px;
@@ -80,4 +76,8 @@ li {
   margin: 10px 0px;
   padding: 4px 8px 4px 10px;
   border-radius: 10px;
+}
+
+.setBorderBottom {
+  border-bottom: solid 4px;
 }
